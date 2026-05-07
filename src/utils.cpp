@@ -19,7 +19,12 @@ http::response<http::string_body> handle_request(const http::request<http::strin
     if (req.target() == "/") {
       res.result(http::status::ok);
       res.body() = read_file("static/index.html");
-    } else {
+    } 
+    else if (req.target() == "/khater") {
+      res.result(http::status::ok);
+      res.body() = read_file("static/khater.html");
+    }
+    else {
       res.result(http::status::not_found);
       res.body() = "<h1 style=\"text-align: center;\">404 Not Found</h1>";
     }
@@ -40,10 +45,9 @@ std::string read_file(const std::string& file_path){
     return "Error: Could not find file at " + file_path;
   }
   std::string content;
+  std::string line;
 
-  while(!file.eof()){
-    std::string line;
-    std::getline(file, line);
+  while(std::getline(file, line)){
     content += line;
     content += "\n";
   }
