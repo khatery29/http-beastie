@@ -29,3 +29,21 @@ http::response<http::string_body> handle_request(const http::request<http::strin
   res.prepare_payload();
   return res;
 }
+
+std::string read_file(const std::string& file_path){
+
+  std::ifstream file(file_path);
+  if (!file.is_open()) {
+    return "Error: Could not find file at " + file_path;
+  }
+  std::string content;
+
+  while(!file.eof()){
+    std::string line;
+    std::getline(file, line);
+    content += line;
+    content += "\n";
+  }
+  file.close();
+  return content;
+}
